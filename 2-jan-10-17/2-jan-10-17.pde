@@ -30,7 +30,6 @@ class Branch {
     tlen *= 0.80;
     if(tlen > 16) {
       int n = round(randomGaussian()+2);
-      println(n);
       for(int i = 0; i < n; i++) {
         branches.add(new Branch(tlen, random(0, 1000)));
       }
