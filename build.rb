@@ -1,24 +1,38 @@
-File.open("index.html", "w") do |f|
-  dirs = Dir.glob('*/').reverse
+File.open("index.html", "w") do |homepage|
+  dirs = Dir.glob('*/')
   count = dirs.size
-  f.write <<-eos
+  homepage.write <<-eos
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8">
     <title>daily doodles doubtfully dueling depression</title>
-    <script src="processing.min.js"></script>
   </head>
   <body>
     <h1>days: #{count}</h1>
   eos
   dirs.each do |dir|
     dir.chomp! "/"
-    f.write <<-eos
-    <h2>#{dir}</h2>
-    <canvas data-processing-sources="#{dir}/#{dir}.pde"></canvas>
+    File.open("#{dir}/index.html", "w") do |doodlepage|
+      doodlepage.write <<-eos
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>daily doodles doubtfully dueling depression</title>
+    <script src="../processing.min.js"></script>
+  </head>
+  <body>
+    <canvas data-processing-sources="#{dir}.pde"></canvas>
+  </body>
+</html>
+      eos
+    end
+    homepage.write <<-eos
+    <h2><a href="#{dir}/index.html">#{dir}</a></h2>
     eos
   end
-  <<-eos
+  homepage.write <<-eos
   </body>
 </html>
   eos
