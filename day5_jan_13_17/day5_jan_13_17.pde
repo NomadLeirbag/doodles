@@ -1,11 +1,7 @@
-/* @pjs font="./ReenieBeanie.ttf"; */
-
 ArrayList<Line> lines;
-PFont font;
 
 void setup() {
   size(500, 500);
-  textFont(createFont("ReenieBeanie", 36), 36);
   textSize(36);
   textAlign(CENTER, CENTER);
   fill(0);
