@@ -1,3 +1,12 @@
+require "date"
+
+def pretty_dir(dir)
+  parts = dir.split("_")
+  day = parts[0].split(/(\d)/)[1]
+  month = Date::MONTHNAMES.select { |m| !m.nil? && m.downcase.include?(parts[1]) }[0]
+  "day #{day}: #{month} #{parts[2]}, 20#{parts[3]}"
+end
+
 File.open("index.html", "w") do |homepage|
   dirs = Dir.glob("*/").sort.reverse.map { |dir| dir.chomp '/' }
   count = dirs.size
@@ -22,12 +31,12 @@ File.open("index.html", "w") do |homepage|
     <script src='../processing.min.js'></script>
   </head>
   <body>
-    <p>#{dir}</p>
+    <p>#{pretty_dir(dir)}</p>
       eos
       doodlepage.write "    <p>" +
-        (i < count-1 ? "<a href='../#{dirs[i+1]}/index.html'>previous</a> | " : "") +
-        "<a href='../index.html'>list</a>" +
-        (i > 0 ? " | <a href='../#{dirs[i-1]}/index.html'>next</a>" : "") +
+        (i < count-1 ? "<a href='../#{dirs[i+1]}/index.html'>previous</a>" : "<s>previous</s>") +
+        " | <a href='../index.html'>list</a> | " +
+        (i > 0 ? "<a href='../#{dirs[i-1]}/index.html'>next</a>" : "<s>next</s>") +
         "</p>\n"
       doodlepage.write <<-eos
     <canvas data-processing-sources="#{dir}.pde"></canvas>
@@ -36,7 +45,7 @@ File.open("index.html", "w") do |homepage|
       eos
     end
     homepage.write <<-eos
-    <p><a href='#{dir}/index.html'>#{dir}</a></p>
+    <p><a href='#{dir}/index.html'>#{pretty_dir(dir)}</a></p>
     eos
   end
   homepage.write <<-eos
