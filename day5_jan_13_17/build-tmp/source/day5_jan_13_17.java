@@ -14,14 +14,10 @@ import java.io.IOException;
 
 public class day5_jan_13_17 extends PApplet {
 
-/* @pjs font="data/ReenieBeanie.ttf"; */
-
 ArrayList<Line> lines;
-PFont font;
 
 public void setup() {
   
-  textFont(createFont("ReenieBeanie", 36), 36);
   textSize(36);
   textAlign(CENTER, CENTER);
   fill(0);
