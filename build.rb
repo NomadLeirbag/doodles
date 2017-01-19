@@ -2,9 +2,8 @@ require "date"
 
 def dir_parts(dir)
   parts = dir.split("_")
-  num = parts[0].split(/(\d)/)[1]
-  month = Date::MONTHNAMES.select { |m| !m.nil? && m.downcase.include?(parts[1]) }[0]
-  { num: num, month: month, day: parts[2], year: "20#{parts[3]}" }
+  month = Date::MONTHNAMES.select { |m| !m.nil? && m.downcase.include?(parts[2]) }[0]
+  { num: parts[1], month: month, day: parts[3], year: "20#{parts[4]}" }
 end
 
 def pretty_text_dir(dir)
@@ -18,7 +17,7 @@ def pretty_html_dir(dir)
 end
 
 File.open("index.html", "w") do |homepage|
-  dirs = Dir.glob("*/").sort.reverse.map { |dir| dir.chomp '/' }
+  dirs = Dir.glob("*/").sort_by { |dir| dir_parts(dir)[:num].to_i }.reverse.map { |dir| dir.chomp '/' }
   count = dirs.size
   homepage.write <<-eos
 <!DOCTYPE html>
