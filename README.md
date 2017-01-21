@@ -1,2 +1,2 @@
 # doodles
-daily doodles doubtfully dueling depression
+daily digital doodles doubtfully dueling depression
